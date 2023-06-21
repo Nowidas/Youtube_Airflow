@@ -174,3 +174,14 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# SECRETS
+dags/secrets.py
+
+# Airflow data
+logs
+data
+
+# Old data and crone
+old_txt_data
+alert_deleted_video.py
