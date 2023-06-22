@@ -14,7 +14,7 @@ import alert_deleted_video as api
 
 
 @dag(
-    dag_id="youtube-dag-test",
+    dag_id="youtube-playlist-backup-dag",
     schedule_interval=datetime.timedelta(weeks=1),
     start_date=pendulum.datetime(2023, 6, 19, tz="UTC"),
     catchup=False,
