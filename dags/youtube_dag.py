@@ -151,7 +151,13 @@ def YoutubeDAG():
             html_content=html_content,
         )
 
-    (create_tracks_table >> save_data() >> find_deleted_data() >> send_raport())
+    (
+        create_tracks_table
+        >> parallel_tasks
+        >> save_data()
+        >> find_deleted_data()
+        >> send_raport()
+    )
 
 
 dag = YoutubeDAG()
