@@ -177,6 +177,7 @@ pyrightconfig.json
 
 # SECRETS
 dags/secrets_keys.py
+config/airflow.cfg
 
 # Airflow data
 logs
