@@ -10,7 +10,7 @@ from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.utils.email import send_email
 
-import alert_deleted_video as api
+import api_functions as api
 
 
 @dag(

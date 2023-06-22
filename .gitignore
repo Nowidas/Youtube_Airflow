@@ -185,4 +185,4 @@ data
 
 # Old data and crone
 old_txt_data
-alert_deleted_video.py
+/alert_deleted_video.py
