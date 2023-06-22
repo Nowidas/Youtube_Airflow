@@ -63,7 +63,6 @@ def YoutubeDAG():
         for fp in glob.glob(data_path + "PL*"):
             with open(fp, "r", encoding="utf-16") as file:
                 playlist_name = api.playlists[fp.split("/")[-1].replace(".csv", "")]
-                print(playlist_name)
                 cur.copy_expert(
                     f"""ALTER TABLE tracks ALTER date SET DEFAULT '{run_date}';
                     ALTER TABLE tracks ALTER playlist_name SET DEFAULT '{playlist_name}';
@@ -111,7 +110,7 @@ def YoutubeDAG():
     def send_raport():
         file_path = data_path + "deleted.csv"
         if not os.path.exists(file_path):
-            print("ZLE empty")
+            print("no errors !")
             return 0
 
         html_content = """"""
@@ -121,7 +120,7 @@ def YoutubeDAG():
                 delimiter="\t",
             )
             if next(reader, None) == None:
-                print("ZLE next")
+                print("no errors !")
                 return 0
 
             for row in reader:
@@ -146,7 +145,6 @@ def YoutubeDAG():
                     </tr>\n"""
             html_content += "</table>\n"
 
-        print(html_content)
         send_email(
             to=["lukaszkrupczak@gmail.com"],
             subject="⚠️ " + subject,
