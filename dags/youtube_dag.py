@@ -11,6 +11,7 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.utils.email import send_email
 
 import api_functions as api
+from secrets_keys import YOUTUBE_API_KEY as API_KEY
 
 
 @dag(
@@ -34,6 +35,7 @@ def YoutubeDAG():
                 "track_name" TEXT
             );""",
     )
+    yt_api = api.YoutubeHook(API_KEY, api.playlists)
     run_date = datetime.datetime.now().strftime("%Y-%m-%d")
     data_path = "/opt/airflow/data/playlist_backup/" + run_date + "/"
 
@@ -47,8 +49,8 @@ def YoutubeDAG():
 
             HEADER = "track_pos\ttrack_id\ttrack_name"
             with open(data_path + k.strip() + ".csv", "w", encoding="utf-16") as file:
-                playlist = api.get_playlist(k)
-                playlist = api.clear_playlist_dic(playlist)
+                playlist = yt_api._get_playlist(k)
+                playlist = yt_api._clear_playlist_dic(playlist)
                 file.write(HEADER + "\n")
                 file.writelines(playlist)
 
