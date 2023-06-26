@@ -116,6 +116,7 @@ def YoutubeDAG():
             return 0
 
         html_content = """"""
+        subject = ""
         with open(file_path, "r", encoding="utf-16") as file:
             reader = csv.DictReader(
                 file,
@@ -126,7 +127,7 @@ def YoutubeDAG():
                 return 0
 
             for row in reader:
-                subject = (
+                subject += (
                     f"Deleted music raport for {row['old_date']} - {row['new_date']}"
                 )
                 html_content += "<h1>🎵" + subject + "🎵</h1>"
