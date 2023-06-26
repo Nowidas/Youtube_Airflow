@@ -125,7 +125,7 @@ def YoutubeDAG():
             if next(reader, None) == None:
                 print("no errors !")
                 return 0
-
+            file.seek(0)
             for row in reader:
                 subject += (
                     f"Deleted music raport for {row['old_date']} - {row['new_date']}"
@@ -147,7 +147,7 @@ def YoutubeDAG():
                             <td>{row['old_track_pos']}</td>
                     </tr>\n"""
             html_content += "</table>\n"
-
+            print(html_content)
         send_email(
             to=["lukaszkrupczak@gmail.com"],
             subject="⚠️ " + subject,
