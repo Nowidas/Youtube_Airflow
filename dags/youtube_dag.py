@@ -12,6 +12,7 @@ from airflow.utils.email import send_email
 
 import api_functions as api
 from secrets_keys import YOUTUBE_API_KEY as API_KEY
+from secrets_keys import MAIL_TO
 
 
 @dag(
@@ -127,19 +128,19 @@ def YoutubeDAG():
                 return 0
             file.seek(0)
             for row in reader:
-                subject += (
-                    f"Deleted music raport for {row['old_date']} - {row['new_date']}"
-                )
-                html_content += "<h1>🎵" + subject + "🎵</h1>"
                 break
 
-            html_content += """<table>\n <tr> 
-                            <td>playlist</td>
-                            <td>title</td>
-                            <td>new_track_pos</td>
-                            <td>old_track_pos</td>
-                    </tr>\n"""
             for row in reader:
+                if subject == "":
+                    subject += f"Deleted music raport for {row['old_date']} - {row['new_date']}"
+                    html_content += "<h1>🎵" + subject + "🎵</h1>"
+                    html_content += """<table>\n <tr> 
+                                    <td>playlist</td>
+                                    <td>title</td>
+                                    <td>new_track_pos</td>
+                                    <td>old_track_pos</td>
+                            </tr>\n"""
+
                 html_content += f"""<tr> 
                             <td>{row['playlist_name']}</td>
                             <td>{row['track_name']}</td>
@@ -147,9 +148,8 @@ def YoutubeDAG():
                             <td>{row['old_track_pos']}</td>
                     </tr>\n"""
             html_content += "</table>\n"
-            print(html_content)
         send_email(
-            to=["lukaszkrupczak@gmail.com"],
+            to=MAIL_TO,
             subject="⚠️ " + subject,
             html_content=html_content,
         )
