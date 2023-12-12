@@ -36,9 +36,9 @@ class YoutubeHook:
     def _get_playlist(self, id: str):
         res = self._get_playlist_page(id, pageToken=None)
         playlist = res.copy()
-        pages_count = (
-            res["pageInfo"]["totalResults"] // res["pageInfo"]["resultsPerPage"]
-        )
+        pages_count = (res["pageInfo"]["totalResults"] - 1) // res["pageInfo"][
+            "resultsPerPage"
+        ]
         for _ in range(pages_count):
             res = self._get_playlist_page(id, pageToken=res["nextPageToken"])
             playlist["items"].extend(res["items"])
